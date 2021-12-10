@@ -37,7 +37,16 @@ class OrderFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_order, container, false)
         val productos=OrderFragmentArgs.fromBundle(requireArguments()).producto
-        view.findViewById<TextView>(R.id.txt_productos).text=productos
+        if (productos!!.isEmpty())
+        {
+
+            view.findViewById<TextView>(R.id.txt_productos).text="No has seleccionado ningún producto"
+        }
+        else
+        {
+            view.findViewById<TextView>(R.id.txt_productos).text=productos
+        }
+
         return view
     }
 

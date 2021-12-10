@@ -59,7 +59,8 @@
                     android:textStyle="bold"
                     android:backgroundTint="@color/teal_700"
                     android:id="@+id/chip_ecuatoriana"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    app:checkedIconEnabled="false"/>
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,7 +68,9 @@
                     android:textStyle="bold"
                     android:backgroundTint="@color/teal_700"
                     android:id="@+id/chip_colombiana"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    app:checkedIconEnabled="false"
+                    app:chipBackgroundColor="@color/white"/>
 
             </com.google.android.material.chip.ChipGroup>
 

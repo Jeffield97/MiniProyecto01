@@ -1,5 +1,6 @@
 package com.sox.miniproyecto
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,17 +46,17 @@ class FoodsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var arrayAdapter:ArrayAdapter<*>
-        val comidasColombianas= mutableListOf("Lechona","Bandeja Paisa","Arepa")
-        val comidasEcuatorianas= mutableListOf("Hornado","Humitas","Encebollado","Fritada")
-        val comidasOferta = mutableListOf("Lechona","Bandeja Paisa","Arepa","Hornado","Humitas","Encebollado","Fritada")
+        val comidasColombianas= mutableListOf("Lechona","Bandeja Paisa","Arepa","Ajiaco","Sancocho","Oblea")
+        val comidasEcuatorianas= mutableListOf("Hornado","Humitas","Encebollado","Fritada","Churrasco")
+        //val comidasOferta = mutableListOf("Lechona","Bandeja Paisa","Arepa","Hornado","Humitas","Encebollado","Fritada")
 
         val view = inflater.inflate(R.layout.fragment_foods, container, false)
         val lvFoods= view.findViewById<ListView>(R.id.lv_foods)
-        val chipComida= view.findViewById<ChipGroup>(R.id.chip_group_comida)
+        //val chipComida= view.findViewById<ChipGroup>(R.id.chip_group_comida)
         val btn_siguiente = view.findViewById<FloatingActionButton>(R.id.siguiente)
 
 
-        arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+        arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasColombianas+comidasEcuatorianas)
         //arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasEcuatorianas)
         lvFoods.adapter = arrayAdapter
 
@@ -64,16 +66,17 @@ class FoodsFragment : Fragment() {
             chip_ec.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked)
                 {
-                    Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
 
                     arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasEcuatorianas)
                     lvFoods.adapter = arrayAdapter
+
                 }
                 else
                 {
-                    arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+                    arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasColombianas+comidasEcuatorianas)
                     lvFoods.adapter = arrayAdapter
-                    Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
                     //chip_ec.setTextColor(R.color.black)
                 }
             }
@@ -82,28 +85,29 @@ class FoodsFragment : Fragment() {
         chip_co.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
 
                 arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasColombianas)
                 lvFoods.adapter = arrayAdapter
             }
             else
             {
-                arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+                arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasEcuatorianas+comidasEcuatorianas)
                 lvFoods.adapter = arrayAdapter
-                Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
                 //chip_ec.setTextColor(R.color.black)
             }
         }
         var productos_seleccionados=arrayListOf<String>()
         lvFoods.setOnItemClickListener { parent, view, position, id ->
             productos_seleccionados.add(lvFoods.getItemAtPosition(position).toString())
-            Toast.makeText(this.context, position.toString(), Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this.context,"Has añadido "+lvFoods.getItemAtPosition(position).toString()+" a tu orden", Toast.LENGTH_SHORT).show()
+            Snackbar.make(this.requireContext(),view,"Has añadido "+lvFoods.getItemAtPosition(position).toString()+" a tu orden",Snackbar.LENGTH_LONG,).show()
         }
 
         btn_siguiente.setOnClickListener {
             //Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
-            val action = FoodsFragmentDirections.actionFoodsFragmentToOrderFragment(productos_seleccionados)
+            val action = FoodsFragmentDirections.actionFoodsFragmentToOrderFragment(productos_seleccionados.toString())
             view.findNavController().navigate(action)
 
         }

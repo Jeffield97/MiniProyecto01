@@ -20,15 +20,19 @@
         android:orientation="vertical"
         android:layout_gravity="center">
         <EditText
+            android:id="@+id/edx_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User"
+            android:inputType="text"
             android:drawableStart="@drawable/ic_user"
             android:layout_gravity="center"/>
         <EditText
+            android:id="@+id/edx_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password" />
         <Button
             android:layout_width="match_parent"

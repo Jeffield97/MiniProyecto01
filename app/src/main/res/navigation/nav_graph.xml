@@ -30,6 +30,7 @@
         tools:layout="@layout/fragment_order" >
         <argument
             android:name="producto"
-            app:nullable="true" />
+            app:nullable="true"
+            app:argType="string" />
     </fragment>
 </navigation>

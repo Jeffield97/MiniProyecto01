@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,10 +42,32 @@ class LoginFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         val btn_ingresar = view.findViewById<Button>(R.id.btn_ingresar)
         btn_ingresar.setOnClickListener {
+        val txt_user = view.findViewById<EditText>(R.id.edx_user).text.toString()
+        val txt_pass = view.findViewById<EditText>(R.id.edx_password).text.toString()
+        if (auth(txt_user,txt_pass)){
+
                 val action = LoginFragmentDirections.actionLoginFragmentToFoodsFragment()
-                    view.findNavController().navigate(action)
+                view.findNavController().navigate(action)
+
         }
+        else
+        {
+            //Snackbar.make(this.requireContext(),view,"Fallo al intresar",Snackbar.LENGTH_SHORT,).show()
+            Toast.makeText(this.context,"Error al autenticar",Toast.LENGTH_SHORT).show()
+        }
+        }
+
         return view
+    }
+
+    fun auth(user:String,password:String):Boolean
+    {
+        var success=false
+        if (user == "admin" && password=="password")
+        {
+            success=true
+        }
+        return success
     }
 
     companion object {
