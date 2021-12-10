@@ -7,6 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
+import androidx.core.view.forEach
+import androidx.core.view.get
+import androidx.navigation.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,16 +43,74 @@ class FoodsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val arrayAdapter:ArrayAdapter<*>
-        val comidas= mutableListOf("Hornado","Encebollado","Arepa")
+        var arrayAdapter:ArrayAdapter<*>
+        val comidasColombianas= mutableListOf("Lechona","Bandeja Paisa","Arepa")
+        val comidasEcuatorianas= mutableListOf("Hornado","Humitas","Encebollado","Fritada")
+        val comidasOferta = mutableListOf("Lechona","Bandeja Paisa","Arepa","Hornado","Humitas","Encebollado","Fritada")
 
         val view = inflater.inflate(R.layout.fragment_foods, container, false)
         val lvFoods= view.findViewById<ListView>(R.id.lv_foods)
+        val chipComida= view.findViewById<ChipGroup>(R.id.chip_group_comida)
+        val btn_siguiente = view.findViewById<FloatingActionButton>(R.id.siguiente)
 
-        arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidas)
+
+        arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+        //arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasEcuatorianas)
         lvFoods.adapter = arrayAdapter
+
+
+
+        val chip_ec=view.findViewById<Chip>(R.id.chip_ecuatoriana)
+            chip_ec.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked)
+                {
+                    Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
+
+                    arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasEcuatorianas)
+                    lvFoods.adapter = arrayAdapter
+                }
+                else
+                {
+                    arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+                    lvFoods.adapter = arrayAdapter
+                    Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
+                    //chip_ec.setTextColor(R.color.black)
+                }
+            }
+
+        val chip_co=view.findViewById<Chip>(R.id.chip_colombiana)
+        chip_co.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
+
+                arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasColombianas)
+                lvFoods.adapter = arrayAdapter
+            }
+            else
+            {
+                arrayAdapter= ArrayAdapter(this.requireContext(),android.R.layout.simple_expandable_list_item_1,comidasOferta)
+                lvFoods.adapter = arrayAdapter
+                Toast.makeText(this.context, "No estoy seleccionado", Toast.LENGTH_SHORT).show()
+                //chip_ec.setTextColor(R.color.black)
+            }
+        }
+        var productos_seleccionados=arrayListOf<String>()
+        lvFoods.setOnItemClickListener { parent, view, position, id ->
+            productos_seleccionados.add(lvFoods.getItemAtPosition(position).toString())
+            Toast.makeText(this.context, position.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+        btn_siguiente.setOnClickListener {
+            //Toast.makeText(this.context, "Estoy seleccionado", Toast.LENGTH_SHORT).show()
+            val action = FoodsFragmentDirections.actionFoodsFragmentToOrderFragment(productos_seleccionados)
+            view.findNavController().navigate(action)
+
+        }
         return view
     }
+
+
 
     companion object {
         /**

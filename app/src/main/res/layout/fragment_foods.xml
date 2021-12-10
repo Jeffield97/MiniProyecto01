@@ -49,19 +49,26 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_group_comida"
+                app:singleSelection="true">
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ecuatoriana"
                     android:textStyle="bold"
-                    android:backgroundTint="@color/teal_700"/>
+                    android:backgroundTint="@color/teal_700"
+                    android:id="@+id/chip_ecuatoriana"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Colombiana"
                     android:textStyle="bold"
-                    android:backgroundTint="@color/teal_700"/>
+                    android:backgroundTint="@color/teal_700"
+                    android:id="@+id/chip_colombiana"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
             </com.google.android.material.chip.ChipGroup>
 
             <ListView
@@ -71,8 +78,16 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp"
+        android:id="@+id/siguiente"
+        />
 
 
 
